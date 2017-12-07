@@ -108,7 +108,7 @@ lock.acquireWrite(key, () => {
 
 ```js
 // Specify timeout
-var lock = new ClusterReadwriteLock({timeout : 5000});
+var lock = new ClusterReadwriteLock(cluster, {timeout : 5000});
 lock.acquireRead(key, fn)
     .then(() => {
            // critical section will never be entered if timeout occurs
@@ -125,7 +125,7 @@ lock.acquireWrite(key, fn)
     });
 
 // Set max pending tasks
-var lock = new ClusterReadwriteLock({maxPending : 1000});
+var lock = new ClusterReadwriteLock(cluster, {maxPending : 1000});
 lock.acquireRead(key, fn)
     .then(() => {
            // critical section will never be entered if pending limit reached
@@ -142,8 +142,8 @@ lock.acquireWrite(key, fn)
     });
 
 // Use your own promise library instead of the global Promise variable
-var lock = new ClusterReadwriteLock({Promise : require('bluebird')}); // Bluebird
-var lock = new ClusterReadwriteLock({Promise : require('q').Promise}); // Q
+var lock = new ClusterReadwriteLock(cluster, {Promise : require('bluebird')}); // Bluebird
+var lock = new ClusterReadwriteLock(cluster, {Promise : require('q').Promise}); // Q
 ```
 
 ## Issues
