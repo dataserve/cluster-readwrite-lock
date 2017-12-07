@@ -258,7 +258,7 @@ if (cluster.isMaster) {
             lock.setOpt({}).then(() => {
                 lock.acquireWrite("key", null)
                     .then(() => {
-                        assert("invalid parameter not caught");
+                        done(new Error("invalid parameter not caught"));
                     }).catch((err) => {
                         done();
                     });

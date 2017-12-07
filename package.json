@@ -4,6 +4,7 @@
   "description": "A nodejs readwrite lock useable across a worker cluster",
   "main": "index.js",
   "scripts": {
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage",
     "test": "mocha"
   },
   "repository": {
