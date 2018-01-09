@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const Hub = require("cluster-hub");
-const ReadwriteLock = require("readwrite-lock");
+const Hub = require('cluster-hub');
+const ReadwriteLock = require('readwrite-lock');
 
 class LockServer {
 
@@ -42,15 +42,15 @@ class LockServer {
             }
         });
         
-        parent.hub.on("acquireLock", (data, worker, callback) => {
-            if (typeof data.isWrite === "undefined"
-                || typeof data.key === "undefined") {
-                callback("missing params");
+        parent.hub.on('acquireLock', (data, worker, callback) => {
+            if (typeof data.isWrite === 'undefined'
+                || typeof data.key === 'undefined') {
+                callback('missing params');
             }
             
             let workerId = worker.id;
             
-            let fn = data.isWrite ? "acquireWrite" : "acquireRead";
+            let fn = data.isWrite ? 'acquireWrite' : 'acquireRead';
 
             if (!this.acquiredCnt[workerId]) {
                 this.acquiredCnt[workerId] = 1;
@@ -73,7 +73,7 @@ class LockServer {
             });
         });
 
-        parent.hub.on("releaseLock", (data, worker, callback) => {
+        parent.hub.on('releaseLock', (data, worker, callback) => {
             let workerId = worker.id;
             
             let err = this.releaseLock(workerId, data.id, true);
@@ -81,7 +81,7 @@ class LockServer {
             callback(err);
         });
 
-        parent.hub.on("setOpt", (data, worker, callback) => {
+        parent.hub.on('setOpt', (data, worker, callback) => {
             this.setOpt(data.opt);
             
             callback();
@@ -90,7 +90,7 @@ class LockServer {
 
     releaseLock(workerId, lockId, isSuccess) {
         if (!this.acquiredResolve[workerId] || !this.acquiredResolve[workerId][lockId]) {
-            return "lock not found";
+            return 'lock not found';
         }
 
         if (isSuccess) {
@@ -120,7 +120,7 @@ class LockClient {
         this.parent.Promise = opt.Promise || Promise;
 
         return new this.parent.Promise((resolve, reject) => {
-            this.parent.hub.requestMaster("setOpt", {opt}, (err) => {
+            this.parent.hub.requestMaster('setOpt', { opt }, (err) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -134,7 +134,7 @@ class LockClient {
         return new this.parent.Promise((resolve, reject) => {
             var lockErr = null;
             
-            this.parent.hub.requestMaster("acquireLock", {isWrite, key, opt}, (err, id) => {
+            this.parent.hub.requestMaster('acquireLock', { isWrite, key, opt }, (err, id) => {
                 if (err) {
                     reject(err);
                     
@@ -146,7 +146,7 @@ class LockClient {
                         lockErr = err;
                     })
                     .then(() => {
-                        this.parent.hub.requestMaster("releaseLock", {id}, (err) => {
+                        this.parent.hub.requestMaster('releaseLock', { id }, (err) => {
                             if (err && !lockErr) {
                                 lockErr = err;
                             }
@@ -163,8 +163,8 @@ class LockClient {
     }
 
     _promiseTry(fn) {
-        if (typeof fn !== "function") {
-            return this.parent.Promise.reject("invalid function passed");
+        if (typeof fn !== 'function') {
+            return this.parent.Promise.reject('invalid function passed');
         }
         
         try {
@@ -200,7 +200,7 @@ class ClusterReadwriteLock {
     
     acquireRead(key, fn, opt) {
         if (this.server) {
-            throw new Error("cluster master cannot acquire lock");
+            throw new Error('cluster master cannot acquire lock');
         }
         
         return this.client.acquire(false, key, fn, opt);
@@ -208,7 +208,7 @@ class ClusterReadwriteLock {
 
     acquireWrite(key, fn, opt) {
         if (this.server) {
-            throw new Error("cluster master cannot acquire lock");
+            throw new Error('cluster master cannot acquire lock');
         }
         
         return this.client.acquire(true, key, fn, opt);
