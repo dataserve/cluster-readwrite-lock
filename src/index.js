@@ -145,7 +145,7 @@ class LockClient {
                     .catch((err) => {
                         lockErr = err;
                     })
-                    .then(() => {
+                    .then((result) => {
                         this.parent.hub.requestMaster('releaseLock', { id }, (err) => {
                             if (err && !lockErr) {
                                 lockErr = err;
@@ -154,7 +154,7 @@ class LockClient {
                             if (lockErr) {
                                 reject(lockErr);
                             } else {
-                                resolve();
+                                resolve(result);
                             }
                         });
                     });

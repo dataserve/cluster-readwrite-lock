@@ -1,6 +1,6 @@
 {
   "name": "cluster-readwrite-lock",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A nodejs readwrite lock useable across a worker cluster",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   "homepage": "https://github.com/dataserve/cluster-readwrite-lock",
   "dependencies": {
     "cluster-hub": "^0.1.2",
-    "readwrite-lock": "^1.0.3"
+    "readwrite-lock": "^1.0.5"
   },
   "devDependencies": {
     "bluebird": "^3.5.1",
