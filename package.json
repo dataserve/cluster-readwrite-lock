@@ -1,6 +1,6 @@
 {
   "name": "cluster-readwrite-lock",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A nodejs readwrite lock useable across a worker cluster",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
   "devDependencies": {
     "bluebird": "^3.5.1",
     "chai": "^4.1.2",
-    "mocha": "^4.0.1",
+    "mocha": "^6.1.4",
     "q": "^1.5.1"
   }
 }
