@@ -27,7 +27,7 @@
   "devDependencies": {
     "bluebird": "^3.5.1",
     "chai": "^4.1.2",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "q": "^1.5.1"
   }
 }
